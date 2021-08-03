@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>Hexapod Controller</title>
+        <meta name="description" content="Hexapodコントローラー"/>
+        <meta charset="UTF-8"/>
+        <meta name="robots" content="noindex"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+
+    <body>
+        <!-- ヘッダー -->
+        <header>
+            <span>Hexapod Webコントローラ</span>
+            <div>
+                <a href="album.html"><img src="./img/picture.svg" width="32" height="32" alt="アルバム"></a>
+                <a href="help.html"><img src="./img/help.svg" width="32" height="32" alt="ヘルプ"></a>
+                <a href="info.html"><img src="./img/info.svg" width="32" height="32" alt="アプリ情報"></a>
+            </div>
+        </header>
+
+        <!-- カメラコントロール -->
+        <div class="camera-field">
+            <div class="camera-control-field">
+                <!-- カメラ映像 -->
+                <div class="camera-preview"><canvas id="canvas" width="512" height="384"></canvas></div>
+                <!-- コントロールボタン -->
+                <div class="camera-control">
+                    <button class="camera-control-button get-image" type="button">撮影</button>
+                    <button class="camera-control-button start-capture" id="startcapture" type="button" onclick="startCapture();cameraControl();">録画</button>
+                    <button class="camera-control-button end-capture" id="endcapture" type="button" onclick="endCapture();cameraControl();">停止</button>
+                </div>
+            </div>
+            <!-- カメラ映像サイズ変更 -->
+            <div class="canvas-size-field">
+                <label>カメラ映像サイズ：</label>
+                <select class="canvas-size-list" id="canvas_size" onchange="canvasSize()">
+                    <option id="csl_default" value="default" selected>512x384px(default)</option>
+                    <option id="csl_x11" value="x11">563x422px</option>
+                    <option id="csl_x12" value="x12">614x460px</option>
+                    <option id="csl_x13" value="x13">666x499px</option>
+                    <option id="csl_x14" value="x14">717x537px</option>
+                    <option id="csl_x15" value="x15">768x576px</option>
+                    <option id="csl_86" value="86">800x600px</option>
+                </select>
+            </div>   
+        </div>
+
+        <!-- ロボットコントロール -->
+        <div class="robot-field">
+            <div class="robot-control-field">
+                <div>
+                    <button class="robot-control-button rcb2" type="button"></button>
+                    <button class="robot-control-button rcb1" type="button" style="transform:rotateZ(90deg)"></button>
+                    <button class="robot-control-button rcb2" type="button" style="transform:rotateZ(90deg)"></button>
+                </div>
+                <div>
+                    <button class="robot-control-button rcb3" type="button"></button>
+                    <button class="robot-control-button rcb1" type="button"></button>
+                    <button class="robot-control-button" type="button" style="background:none"></button>
+                    <button class="robot-control-button rcb1" type="button" style="transform:rotateZ(180deg)"></button>
+                    <button class="robot-control-button rcb3" type="button" style="transform:scale(-1, 1)"></button>
+                </div>
+                <div>
+                    <button class="robot-control-button rcb2" type="button" style="transform:rotateZ(-90deg)"></button>
+                    <button class="robot-control-button rcb1" type="button" style="transform:rotateZ(-90deg)"></button>
+                    <button class="robot-control-button rcb2" type="button" style="transform:rotateZ(180deg)"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let width = 512, height = 384;  // カメラ映像デフォルトサイズ
+            const canvas = document.getElementById("canvas");
+
+            // カメラ映像ストリーミング配信
+            const context = canvas.getContext("2d");
+            function render() {
+                const image = new Image();
+                image.onload = function(){
+                    canvas.getContext("2d").drawImage(image, 0, 0, width, height);
+                }
+                image.src = "http://192.168.1.22:8001/?action=snapshote";
+                requestAnimationFrame(render);
+            }
+            render();
+
+            // カメラ映像サイズ変更
+            let canvassize = document.getElementById("canvas_size");
+            const canvassizeWidth = [512, 563, 614, 666, 717, 768, 800];
+            function canvasSize() {
+                canvassize = document.getElementById("canvas_size");
+                for (let i = 0; i < 7; i++)
+                {
+                    if (canvassize.value === canvassize.options[i].value)
+                    {
+                        width = canvassizeWidth[i];
+                        height = width * 0.75;
+                        break;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                render();
+            }
+
+            // カメラコントロールボタン
+            let captureflg = 0;
+            const startcapture_button = document.getElementById("startcapture");
+            const endcapture_button = document.getElementById("endcapture");
+            // イベント紐付け
+            function cameracontrolInit() {
+                startcapture_button.addEventListener('mouseover', function() {
+                    startcapture_button.style.backgroundColor = "deepskyblue";
+                });
+                startcapture_button.addEventListener('mouseout', function() {
+                    startcapture_button.style.backgroundColor = "lightskyblue";
+                });
+                endcapture_button.addEventListener('mouseover', function() {
+                    endcapture_button.style.backgroundColor = "deepskyblue";
+                });
+                endcapture_button.addEventListener('mouseout', function() {
+                    endcapture_button.style.backgroundColor = "lightskyblue";
+                });
+            }
+            cameracontrolInit();
+            // 有効無効切り替え
+            function cameraControl() {
+                if (captureflg === 0)
+                {
+                    endcapture_button.disabled = true;
+                    startcapture_button.disabled = false;
+
+                    endcapture_button.style.backgroundColor = "slategray";
+                    startcapture_button.style.backgroundColor = "lightskyblue";
+                } else {
+                    startcapture_button.disabled = true;
+                    endcapture_button.disabled = false;
+
+                    startcapture_button.style.backgroundColor = "slategray";
+                    endcapture_button.style.backgroundColor = "lightskyblue";
+                }
+            }
+            cameraControl();
+
+            // 録画・停止
+            function startCapture() {
+                captureflg = 1;
+            }
+            function endCapture() {
+                captureflg = 0;
+            }
+
+            // レスポンシブ関連
+            let windowW, flg=0;
+            const breakpointWidth = [750, 800, 850, 900, 950, 985];
+            function responsiveChange() {
+                // キャンバスサイズ変更
+                windowW = window.innerWidth;
+                for (let i = 5; i >= 0; i--)
+                {
+                    if (windowW < breakpointWidth[i]) // ブレークポイントより小さい -> 選択無効化&サイズダウン
+                    {
+                        canvassize.options[i+1].disabled = true;
+                        // サイズ変更
+                        if (canvassize.value === canvassize.options[i+1].value)
+                        {
+                            canvassize.options[i].selected = true;
+                            canvasSize();
+                            break;
+                        }
+                    } else { // ブレークポイントより大きい -> 選択有効化
+                        canvassize.options[i+1].disabled = false;
+                    }
+                }
+            }
+            responsiveChange();
+            window.onresize = responsiveChange;
+        </script>
+    </body>
+</html>
