@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>アルバム | Hexapod Controller</title>
+        <meta name="description" content="Hexapodコントローラー"/>
+        <meta charset="UTF-8"/>
+        <meta name="robots" content="noindex"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="stylesheet" href="./css/stylesheet-mix.css">
+        <link rel="stylesheet" href="./css/stylesheet-album.css">
+    </head>
+
+    <body>
+        <!-- ヘッダー -->
+        <header>
+            <span>Hexapod Webコントローラ</span>
+            <div>
+                <a href="help.html"><img src="./img/help.svg" width="32" height="32" alt="ヘルプ"></a>
+                <a href="info.html"><img src="./img/info.svg" width="32" height="32" alt="アプリ情報"></a>
+                <a href="index.html"><img src="./img/home.svg" width="32" height="32" alt="ホーム"></a>
+            </div>
+        </header>
+
+        <div class="container">
+            <h2>アルバム</h2>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:200px"></th>
+                        <th>ファイル名</th>
+                        <th>アップロード日時</th>
+                        <th>編集</th>
+                    </tr>
+                </thead>
+                <tbody id="image_list">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SDKの読み込み -->
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.857.0.min.js"></script>
+        <!-- カメラ映像アップロード -->
+        <script type="text/javascript" src="./js/imageList.js"></script>
+    </body>
+</html>
