@@ -8,7 +8,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <link rel="stylesheet" href="stylesheet.css">
+        <link rel="stylesheet" href="./css/stylesheet-mix.css">
+        <link rel="stylesheet" href="./css/stylesheet-index.css">
     </head>
 
     <body>
@@ -29,9 +30,9 @@
                 <div class="camera-preview"><canvas id="canvas" width="512" height="384"></canvas></div>
                 <!-- コントロールボタン -->
                 <div class="camera-control">
-                    <button class="camera-control-button get-image" type="button">撮影</button>
-                    <button class="camera-control-button start-capture" id="startcapture" type="button" onclick="startCapture();cameraControl();">録画</button>
-                    <button class="camera-control-button end-capture" id="endcapture" type="button" onclick="endCapture();cameraControl();">停止</button>
+                    <button class="camera-control-button get-image" type="button" onclick="call_uploadImage();cameraControl();">撮影</button>
+                    <button class="camera-control-button start-capture" id="startcapture" type="button" onclick="call_startCapture();cameraControl();">録画</button>
+                    <button class="camera-control-button end-capture" id="endcapture" type="button" onclick="call_endCapture();cameraControl();">停止</button>
                 </div>
             </div>
             <!-- カメラ映像サイズ変更 -->
@@ -72,19 +73,20 @@
             </div>
         </div>
 
-        <script>
+        <script type="text/javascript">
             let width = 512, height = 384;  // カメラ映像デフォルトサイズ
             const canvas = document.getElementById("canvas");
 
-            // カメラ映像ストリーミング配信
+            // カメラ映像描画
             const context = canvas.getContext("2d");
             function render() {
                 const image = new Image();
-                image.onload = function(){
-                    canvas.getContext("2d").drawImage(image, 0, 0, width, height);
-                }
                 image.src = "http://192.168.1.22:8001/?action=snapshote";
-                requestAnimationFrame(render);
+                image.onload = function(){
+                    context.drawImage(image, 0, 0, width, height);
+                }
+                image.crossOrigin = "Anonymous";
+                window.requestAnimationFrame(render);
             }
             render();
 
@@ -127,7 +129,7 @@
                 });
             }
             cameracontrolInit();
-            // 有効無効切り替え
+            // 有効・無効切り替え
             function cameraControl() {
                 if (captureflg === 0)
                 {
@@ -146,17 +148,23 @@
             }
             cameraControl();
 
-            // 録画・停止
-            function startCapture() {
-                captureflg = 1;
+            // 撮影呼び出し
+            function call_uploadImage() {
+                uploadImage(canvas);
             }
-            function endCapture() {
+
+            // 録画・停止呼び出し
+            function call_startCapture() {
+                captureflg = 1;
+                
+            }
+            function call_endCapture() {
                 captureflg = 0;
             }
 
             // レスポンシブ関連
-            let windowW, flg=0;
-            const breakpointWidth = [750, 800, 850, 900, 950, 985];
+            let windowW, flg = 0;
+            const breakpointWidth = [750, 800, 850, 900, 950, 985]; // ブレークポイント
             function responsiveChange() {
                 // キャンバスサイズ変更
                 windowW = window.innerWidth;
@@ -180,5 +188,10 @@
             responsiveChange();
             window.onresize = responsiveChange;
         </script>
+
+        <!-- SDKの読み込み -->
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.857.0.min.js"></script>
+        <!-- カメラ映像アップロード -->
+        <script type="text/javascript" src="./js/uploadImage.js"></script>
     </body>
 </html>
