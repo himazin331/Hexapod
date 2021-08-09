@@ -1,0 +1,41 @@
+/* 全ページ共通CSS */
+
+body {
+    margin: 0;
+    min-width: 720px;
+}
+
+/* 
+    ヘッダー
+*/
+header {
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    margin-bottom: 20px;
+    background-color: lightskyblue;
+    box-shadow: 1px 3px 3px gray;
+}
+header span {
+    margin-left: 10px;
+    font-size: 32px;
+    font-weight: bold;
+}
+header div {
+    display: flex;
+    align-items: center;
+}
+header a { 
+    margin: 0 12px;
+}
+
+/*
+    メインコンテンツ
+*/
+.container {
+    margin: 0 10vw;
+}
+
+h2 {
+    margin: 0;
+}
