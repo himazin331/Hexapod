@@ -1,0 +1,31 @@
+h3 {
+    margin-bottom: 3px;
+}
+
+p {
+    margin: 2px 0;
+}
+
+dt {
+    font-weight: bold;
+}
+
+table, td {
+    
+    border: 1px solid #333;
+}
+thead {
+    background-color: #333;
+    color: #fff;
+}
+th {
+    width: 220px;
+}
+td div {
+    margin: 15px ;
+}
+td, td span  {
+    padding: 0 0.5em;
+}
+
+
