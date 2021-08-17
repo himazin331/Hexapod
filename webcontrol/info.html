@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <link rel="stylesheet" href="./css/stylesheet-mix.css">
+        <link rel="stylesheet" href="./css/stylesheet-info.css">
     </head>
     <body>
         <!-- ヘッダー -->
@@ -24,10 +25,52 @@
         <div class="container">
             <h2>アプリ情報</h2>
             <hr>
-            <div>
-                <p>Hexapod Webコントローラ</p>
-                <p>開発者：吉田　紫穏</p>
-            </div>
+            <dl>
+                <dt>名称：</dt>
+                <dd>Hexapod Webコントローラ</dd>
+                <dt>バージョン：</dt>
+                <dd>v0.0.3α</dd>
+                <dt>開発者：</dt>
+                <dd>日本工学院八王子専門学校 ITカレッジAIシステム科 吉田紫穏</dd>
+            </dl>
+            <hr>
+            <h3>ブラウザ対応状況</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ブラウザ<span style="font-size:10px">※1</span></th>
+                        <th>対応状況</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td style="color:lime;font-weight:bold;"><span style="font-size:20px">◎</span> 推奨</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td style="color:lime;font-weight:bold;"><span style="font-size:20px">◎</span> 推奨</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td style="color:lime;font-weight:bold;"><span style="font-size:20px">◎</span> 推奨</td>
+                    </tr>
+                    <tr>
+                        <td>Opera<span style="font-size:10px">※2</span></td>
+                        <td style="color:lime;font-weight:bold;"><span style="font-size:20px">◎</span> 推奨</td>
+                    </tr>
+                    <tr>
+                        <td>Internet Explorer</td>
+                        <td style="color:red;font-weight:bold;"><span style="font-size:22px">✕</span> 動作不可</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td style="color:gray;font-weight:bold;"><span style="font-size:20px">－</span> 未検証</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>※1. 検証したブラウザは全て最新バージョン(2021/08/12現在)<br>
+            ※2. Opera Neonとは区別する。</p>
         </div>
     </body>
 </html>
