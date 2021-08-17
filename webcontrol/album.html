@@ -26,16 +26,34 @@
         <div class="container">
             <h2>アルバム</h2>
             <hr>
+            <!-- 表示コンテンツ&並び順設定 -->
+            <form>
+                <fieldset>
+                    <legend>表示するコンテンツ</legend>
+                    <input type="radio" id="all_viewcontent" name="view_content" value="vc1" checked><label for="all_viewcontent">全て</label>
+                    <input type="radio" id="image_viewcontent" name="view_content" value="vc2"><label for="image_viewcontent">画像</label>
+                    <input type="radio" id="video_viewcontent" name="view_content" value="vc3"><label for="video_viewcontent">動画</label>
+                </fieldset>
+                <fieldset>
+                    <legend>並び順</legend>
+                    <input type="radio" id="asc_sort" name="sort_content" value="sc1" checked><label for="asc_sort">アップロード日時が新しい順</label>
+                    <input type="radio" id="desc_sort" name="sort_content" value="sc2"><label for="desc_sort">アップロード日時が古い順</label>
+                </fieldset>
+
+                <input class="view-sort-submit" type="button" onclick="refreshViewSort()" value="適用">
+            </form>
+
+            <!-- コンテンツリスト -->
             <table>
                 <thead>
                     <tr>
-                        <th style="width:200px"></th>
+                        <th></th>
                         <th>ファイル名</th>
                         <th>アップロード日時</th>
                         <th>編集</th>
                     </tr>
                 </thead>
-                <tbody id="image_list">
+                <tbody id="content_list">
                 </tbody>
             </table>
         </div>
@@ -43,6 +61,6 @@
         <!-- SDKの読み込み -->
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.857.0.min.js"></script>
         <!-- カメラ映像アップロード -->
-        <script type="text/javascript" src="./js/imageList.js"></script>
+        <script type="text/javascript" src="./js/contentList.js"></script>
     </body>
 </html>
