@@ -1,5 +1,21 @@
 /* WebコントローラCSS */
 
+/*
+    メッセージフィールド
+*/
+#message_field {
+    display: flex;
+    justify-content: center; 
+}
+.message {
+    width: 800px;
+    margin: 10px;
+    padding: 5px;
+    border: solid red;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 /* 
     カメラコントロール 
 */
