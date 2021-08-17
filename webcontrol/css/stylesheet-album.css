@@ -1,16 +1,44 @@
 /* アルバムCSS */
 
-table,
-td {
-    border: 1px solid #333;
+/*
+    表示コンテンツ&並び順設定
+*/
+form {
+    display: flex;
+    margin: 1vw 0;
+}
+fieldset {
+    display: block;
+}
+.view-sort-submit {
+    height: 50px;
+    width: 50px;
+    margin-top: 13px;
+    margin-left: 13px;
+    font-size: 16px;
 }
 
-thead,
-tfoot {
+/*
+    コンテンツ表示
+*/
+table, td {
+    border: 1px solid #333;
+}
+thead {
     background-color: #333;
     color: #fff;
 }
-
+th {
+    width: 200vw;
+}
+.content-td {
+    text-align: center;
+}
+.content-td img, .content-td video {
+    margin-top: 8px;
+}
 td div {
     margin: 15px 0;
 }
+
+
